@@ -43,7 +43,6 @@ namespace ECommerce.Identidade.API
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.RegisterIdentity();
             app.RegisterSwagger();
             app.RegisterApp(env);
         }

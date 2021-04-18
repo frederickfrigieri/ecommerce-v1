@@ -24,6 +24,7 @@ namespace ECommerce.Identidade.API.Configuration
 
             app.UseRouting();
             app.RegisterIdentity();
+            app.UseHttpsRedirection();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
             return app;
