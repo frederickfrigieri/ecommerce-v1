@@ -23,11 +23,8 @@ namespace ECommerce.Identidade.API.Configuration
                 app.UseDeveloperExceptionPage();
 
             app.UseRouting();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.RegisterIdentity();
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
             return app;
         }
