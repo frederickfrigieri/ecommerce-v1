@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ECommerce.WebApp.MVC.Controllers
 {
-    public class IdentidadeController : Controller
+    public class IdentidadeController : MainController
     {
         private readonly IAutenticacaoService _autenticacaoService;
 
@@ -38,7 +38,7 @@ namespace ECommerce.WebApp.MVC.Controllers
             //Chamar API
             var response = await _autenticacaoService.Registro(usuarioRegistro);
 
-            if (false)
+            if (ResponsePossuiErros(response.ResponseResult))
                 return View(usuarioRegistro);
 
             //Login na APP
@@ -66,20 +66,21 @@ namespace ECommerce.WebApp.MVC.Controllers
             //Chamar API
             var response = await _autenticacaoService.Login(usuarioLogin);
 
-            if (false)
+            if (ResponsePossuiErros(response.ResponseResult))
                 return View(usuarioLogin);
 
             //Login na APP
             await RealizarLogin(response);
 
             return RedirectToAction("Index", "Home");
-
         }
 
         [HttpGet]
         [Route("sair")]
         public async Task<IActionResult> Logout()
         {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
             return RedirectToAction("Index", "Home");
         }
 
