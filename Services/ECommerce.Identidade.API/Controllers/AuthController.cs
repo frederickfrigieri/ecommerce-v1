@@ -24,6 +24,8 @@ namespace ECommerce.Identidade.API.Controllers
         [Route("nova-conta")]
         public async Task<ActionResult> Registrar(UsuarioRegistro usuarioRegistro)
         {
+            return Forbid();
+
             if (!ModelState.IsValid)
                 return CustomResponse(ModelState);
 

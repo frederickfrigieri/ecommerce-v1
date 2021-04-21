@@ -22,14 +22,21 @@ namespace ECommerce.WebApp.MVC.Configuration
 
         public static IApplicationBuilder RegisterApplication(this IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-                app.UseDeveloperExceptionPage();
-            else
-                app.UseExceptionHandler("/Home/Error");
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //}
+            //else
+            //{
+            app.UseExceptionHandler("/erro/500");
+            app.UseStatusCodePagesWithRedirects("/erro/{0}");
+            app.UseHsts();
+            //}
 
             app.UseStaticFiles();
             app.UseRouting();
             app.RegisterIdentity();
+            app.UseMiddleware<MiddlewareException>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
