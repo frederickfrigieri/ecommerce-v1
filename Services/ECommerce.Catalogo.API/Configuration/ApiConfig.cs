@@ -1,4 +1,5 @@
-﻿using ECommerce.Catalogo.API.Data;
+﻿using ECommerce.API.Core.Configuration;
+using ECommerce.Catalogo.API.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -18,12 +19,7 @@ namespace NSE.Catalogo.API.Configuration
             services.AddControllers();
             services.AddCors(options =>
             {
-                options.AddPolicy("Total",
-                    builder =>
-                        builder
-                            .AllowAnyOrigin()
-                            .AllowAnyMethod()
-                            .AllowAnyHeader());
+                options.AddPolicy("Total", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             });
         }
 
@@ -34,16 +30,11 @@ namespace NSE.Catalogo.API.Configuration
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseRouting();
             app.UseCors("Total");
-
-            //app.UseAuthConfiguration();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseAuthConfiguration();
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }

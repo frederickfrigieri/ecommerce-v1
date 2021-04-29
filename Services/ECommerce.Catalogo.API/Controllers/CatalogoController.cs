@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ECommerce.Catalogo.API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Catalogo.API.Controllers
 {
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class CatalogoController : Controller
     {
         private readonly IProdutoRepository _produtoRepository;
@@ -17,7 +18,7 @@ namespace ECommerce.Catalogo.API.Controllers
             _produtoRepository = produtoRepository;
         }
 
-        //[AllowAnonymous]
+        [AllowAnonymous]
         [HttpGet("catalogo/produtos")]
         public async Task<IEnumerable<Produto>> Index()
         {
@@ -25,6 +26,8 @@ namespace ECommerce.Catalogo.API.Controllers
         }
 
         //[ClaimsAuthorize("Catalogo", "Ler")]
+        //[AllowAnonymous]
+
         [HttpGet("catalogo/produtos/{id}")]
         public async Task<Produto> ProdutoDetalhe(Guid id)
         {

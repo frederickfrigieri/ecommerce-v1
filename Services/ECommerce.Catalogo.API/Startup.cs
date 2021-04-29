@@ -1,3 +1,4 @@
+using ECommerce.API.Core.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -25,8 +26,9 @@ namespace NSE.Catalogo.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.Register(Configuration);
+            services.AddJwtConfiguration(Configuration);
             services.RegisterSwaggerServices();
-            services.RegisterServices(); 
+            services.RegisterServices();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

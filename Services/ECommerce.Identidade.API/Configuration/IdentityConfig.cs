@@ -1,15 +1,10 @@
-﻿using ECommerce.API.Core;
-using ECommerce.API.Core.Configuration;
+﻿using ECommerce.API.Core.Configuration;
 using ECommerce.Identidade.API.Data;
 using ECommerce.Identidade.API.Extensions;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 namespace ECommerce.Identidade.API.Configuration
 {
@@ -28,14 +23,9 @@ namespace ECommerce.Identidade.API.Configuration
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.RegisterJWT(configuration);
+            services.AddJwtConfiguration(configuration);
 
             return services;
-        }
-
-        public static IApplicationBuilder RegisterIdentity(this IApplicationBuilder app)
-        {
-            return app.RegisterAuthenticationAndConfiguration();
         }
     }
 }

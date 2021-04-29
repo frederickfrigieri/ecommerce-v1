@@ -31,10 +31,6 @@
     <ProjectReference Include="..\..\Building Blocks\ECommerce.BuildingBlocks.Core\ECommerce.Core.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Remove="appsettings.json" />
-    <Content Remove="appsettings.Development.json" />
-    <Content Remove="appsettings.json" />
+    <ProjectReference Include="..\..\ECommerce.API.Core\ECommerce.API.Core.csproj" />
   </ItemGroup>
 </Project>

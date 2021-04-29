@@ -9,7 +9,7 @@ namespace ECommerce.API.Core.Configuration
 {
     public static class JWTConfig
     {
-        public static IServiceCollection RegisterJWT(this IServiceCollection services, IConfiguration configuration)
+        public static void AddJwtConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             var appSettingsSection = configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
@@ -35,16 +35,12 @@ namespace ECommerce.API.Core.Configuration
                     ValidIssuer = appSettings.Emissor
                 };
             });
-
-            return services;
         }
 
-        public static IApplicationBuilder RegisterAuthenticationAndConfiguration(this IApplicationBuilder application)
+        public static void UseAuthConfiguration(this IApplicationBuilder application)
         {
-            application.UseAuthorization();
             application.UseAuthentication();
-
-            return application;
+            application.UseAuthorization();
         }
     }
 }

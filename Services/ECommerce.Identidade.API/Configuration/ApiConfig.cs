@@ -1,4 +1,5 @@
-﻿using ECommerce.Identidade.API.Extensions;
+﻿using ECommerce.API.Core.Configuration;
+using ECommerce.Identidade.API.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,7 +12,6 @@ namespace ECommerce.Identidade.API.Configuration
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
             services.AddScoped<IGerarRespostaToken, GerarRespostaToken>();
-
             services.AddControllers();
 
             return services;
@@ -22,9 +22,9 @@ namespace ECommerce.Identidade.API.Configuration
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
+            //app.UseHttpsRedirection();
             app.UseRouting();
-            app.RegisterIdentity();
-            app.UseHttpsRedirection();
+            app.UseAuthConfiguration();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
             return app;
