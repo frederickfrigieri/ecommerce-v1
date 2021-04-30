@@ -12,7 +12,7 @@ namespace ECommerce.Catalogo.API.Data
             : base(options) { }
 
         public DbSet<Produto> Produtos { get; set; }
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(

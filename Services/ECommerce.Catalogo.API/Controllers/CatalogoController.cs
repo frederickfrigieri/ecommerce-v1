@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ECommerce.API.Core;
 using ECommerce.Catalogo.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,7 @@ namespace ECommerce.Catalogo.API.Controllers
             return await _produtoRepository.ObterTodos();
         }
 
-        //[ClaimsAuthorize("Catalogo", "Ler")]
+        [ClaimsAuthorize("Catalogo", "Ler")]
         //[AllowAnonymous]
 
         [HttpGet("catalogo/produtos/{id}")]
