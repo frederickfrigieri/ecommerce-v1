@@ -20,7 +20,7 @@ namespace ECommerce.WebApp.MVC
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>().UseUrls("http://localhost:54361");
                 });
     }
 }

@@ -8,20 +8,20 @@
     }
   },
   "profiles": {
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
+    //"IIS Express": {
+    //  "commandName": "IISExpress",
+    //  "launchBrowser": true,
+    //  "environmentVariables": {
+    //    "ASPNETCORE_ENVIRONMENT": "Development"
+    //  }
+    //},
     "ECommerce.WebApp.MVC": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:5000"
+      "applicationUrl": "http://localhost:54361"
     },
     "Docker": {
       "commandName": "Docker",
