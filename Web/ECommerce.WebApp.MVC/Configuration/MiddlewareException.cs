@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using ECommerce.WebApp.MVC.Exceptions;
 using Microsoft.AspNetCore.Http;
+using Polly.CircuitBreaker;
 using Refit;
 
 namespace ECommerce.WebApp.MVC.Configuration
@@ -33,6 +34,10 @@ namespace ECommerce.WebApp.MVC.Configuration
             {
                 HandleRequestExceptionAsync(context, ex.StatusCode);
             }
+            catch (BrokenCircuitException ex)
+            {
+                HandleRequestExceptionAsync(context);
+            }
 
         }
 
@@ -46,5 +51,11 @@ namespace ECommerce.WebApp.MVC.Configuration
 
             context.Response.StatusCode = (int)statusCode;
         }
+
+        private static void HandleRequestExceptionAsync(HttpContext context)
+        {
+            context.Response.Redirect("/sistema-indisponivel");
+        }
+
     }
 }

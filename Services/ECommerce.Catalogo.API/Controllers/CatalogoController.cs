@@ -28,11 +28,9 @@ namespace ECommerce.Catalogo.API.Controllers
 
         [ClaimsAuthorize("Catalogo", "Ler")]
         //[AllowAnonymous]
-
         [HttpGet("catalogo/produtos/{id}")]
         public async Task<Produto> ProdutoDetalhe(Guid id)
         {
-            //throw new Exception("Erro");
             return await _produtoRepository.ObterPorId(id);
         }
     }
