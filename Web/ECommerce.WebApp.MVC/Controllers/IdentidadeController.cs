@@ -32,20 +32,15 @@ namespace ECommerce.WebApp.MVC.Controllers
         [Route("nova-conta")]
         public async Task<IActionResult> Registro(UsuarioRegistro usuarioRegistro)
         {
-            if (!ModelState.IsValid)
-                return View(usuarioRegistro);
+            if (!ModelState.IsValid) return View(usuarioRegistro);
 
-            //Chamar API
-            var response = await _autenticacaoService.Registro(usuarioRegistro);
+            var resposta = await _autenticacaoService.Registro(usuarioRegistro);
 
-            if (ResponsePossuiErros(response.ResponseResult))
-                return View(usuarioRegistro);
+            if (ResponsePossuiErros(resposta.ResponseResult)) return View(usuarioRegistro);
 
-            //Login na APP
-            await RealizarLogin(response);
+            await RealizarLogin(resposta);
 
-            return RedirectToAction("Index", "Home");
-
+            return RedirectToAction("Index", "Catalogo");
         }
 
 

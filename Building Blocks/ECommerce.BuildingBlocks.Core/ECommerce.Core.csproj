@@ -5,10 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+	  <PackageReference Include="FluentValidation" Version="8.6.2" />
+	  <PackageReference Include="mediatr" Version="8.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DomainObjects\" />
     <Folder Include="Data\" />
   </ItemGroup>
 </Project>

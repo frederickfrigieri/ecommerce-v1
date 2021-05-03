@@ -14,6 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Building Blocks\ECommerce.BuildingBlocks.Core\ECommerce.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Update="Views\Identidade\Login.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
