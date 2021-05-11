@@ -34,7 +34,7 @@ namespace ECommerce.WebApp.MVC.Configuration
             {
                 HandleRequestExceptionAsync(context, ex.StatusCode);
             }
-            catch (BrokenCircuitException ex)
+            catch (BrokenCircuitException)
             {
                 HandleRequestExceptionAsync(context);
             }

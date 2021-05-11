@@ -8,6 +8,7 @@
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'SelfHosting' " />
   <ItemGroup>
+    <PackageReference Include="EasyNetQ" Version="6.3.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.4" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.3" />

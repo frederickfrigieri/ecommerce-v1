@@ -1,5 +1,6 @@
 ﻿using ECommerce.Catalogo.API.Models;
 using ECommerce.Core.Data;
+using ECommerce.Core.Messages;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,6 +16,8 @@ namespace ECommerce.Catalogo.API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Ignore<Event>();
+
             foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(
                 e => e.GetProperties().Where(p => p.ClrType == typeof(string))))
                 property.SetColumnType("varchar(100)");

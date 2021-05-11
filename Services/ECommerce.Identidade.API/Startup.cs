@@ -27,6 +27,7 @@ namespace ECommerce.Identidade.API
             services.RegisterServices();
             services.RegisterSwagger();
             services.RegisterIdentity(Configuration);
+            services.AddMessageBusConfiguration(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

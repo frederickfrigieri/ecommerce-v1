@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation.Results;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,16 +27,33 @@ namespace ECommerce.Identidade.API.Controllers
         {
             foreach (var erro in modelState.Values.SelectMany(e => e.Errors))
             {
-                AdicionarErro(erro.ErrorMessage);
+                AdicionarErroProcessamento(erro.ErrorMessage);
             }
 
             return CustomResponse();
         }
 
+        protected ActionResult CustomResponse(ValidationResult validationResult)
+        {
+            foreach (var erro in validationResult.Errors)
+            {
+                AdicionarErroProcessamento(erro.ErrorMessage);
+            }
+
+            return CustomResponse();
+        }
+
+
         protected bool OperacaoValida() => !Erros.Any();
 
-        protected void AdicionarErro(string erro) => Erros.Add(erro);
+        protected void AdicionarErroProcessamento(string erro)
+        {
+            Erros.Add(erro);
+        }
 
-        protected void LimparErros() => Erros.Clear();
+        protected void LimparErrosProcessamento()
+        {
+            Erros.Clear();
+        }
     }
 }

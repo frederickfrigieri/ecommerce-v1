@@ -3,6 +3,7 @@ using ECommerce.Cliente.API.Application.Events;
 using ECommerce.Cliente.API.Data;
 using ECommerce.Cliente.API.Data.Repository;
 using ECommerce.Cliente.API.Models;
+using ECommerce.Cliente.API.Services;
 using ECommerce.Clientes.API.Application.Commands;
 using ECommerce.Core.Mediator;
 using FluentValidation.Results;
@@ -22,6 +23,12 @@ namespace ECommerce.Cliente.API.Configuration
 
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<ClientesContext>();
+
+            //Registro de classes que rodam em background (herdam de BackgroundService)
+            //services.AddHostedService<RegistroClienteIntegrationHandler>();
+
+
+
         }
     }
 }

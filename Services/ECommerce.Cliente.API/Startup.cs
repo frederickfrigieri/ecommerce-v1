@@ -38,6 +38,8 @@ namespace ECommerce.Cliente.API
             services.AddJwtConfiguration(Configuration);
             services.AddSwaggerConfiguration();
             services.AddMediatR(typeof(Startup));
+            services.AddMessageBusConfiguration(Configuration);
+
             services.RegisterServices();
         }
 

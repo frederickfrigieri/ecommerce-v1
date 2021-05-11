@@ -24,6 +24,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Building Blocks\ECommerce.API.Core\ECommerce.API.Core.csproj" />
+    <ProjectReference Include="..\..\Building Blocks\ECommerce.BuildingBlocks.Core\ECommerce.Core.csproj" />
+    <ProjectReference Include="..\..\Building Blocks\MessageBus\MessageBus.csproj" />
   </ItemGroup>
 
 

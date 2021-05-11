@@ -1,7 +1,11 @@
-﻿using ECommerce.Identidade.API.Extensions;
+﻿using EasyNetQ;
+using ECommerce.Core.Messages.Integration;
+using ECommerce.Identidade.API.Extensions;
 using ECommerce.Identidade.API.Models;
+using MessageBus;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace ECommerce.Identidade.API.Controllers
@@ -13,11 +17,18 @@ namespace ECommerce.Identidade.API.Controllers
         private readonly IGerarRespostaToken _gerarRespostaToken;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public AuthController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IGerarRespostaToken gerarRespostaToken)
+        private readonly IMessageBus _bus;
+
+
+        public AuthController(UserManager<IdentityUser> userManager,
+            SignInManager<IdentityUser> signInManager,
+            IGerarRespostaToken gerarRespostaToken,
+            IMessageBus bus)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _gerarRespostaToken = gerarRespostaToken;
+            _bus = bus;
         }
 
         [HttpPost]
@@ -38,11 +49,19 @@ namespace ECommerce.Identidade.API.Controllers
 
             if (result.Succeeded)
             {
+                var clienteResult = await RegistrarCliente(usuarioRegistro);
+
+                if (!clienteResult.ValidationResult.IsValid)
+                {
+                    await _userManager.DeleteAsync(user);
+                    return CustomResponse(clienteResult.ValidationResult);
+                }
+
                 return CustomResponse(await _gerarRespostaToken.GerarJWT(usuarioRegistro.Email));
             }
 
             foreach (var error in result.Errors)
-                AdicionarErro(error.Description);
+                AdicionarErroProcessamento(error.Description);
 
             return CustomResponse();
         }
@@ -61,14 +80,32 @@ namespace ECommerce.Identidade.API.Controllers
 
             if (result.IsLockedOut)
             {
-                AdicionarErro("Usuário temporariamente bloqueado por tentativas inválidas");
+                AdicionarErroProcessamento("Usuário temporariamente bloqueado por tentativas inválidas");
                 return CustomResponse();
             }
 
-            AdicionarErro("Usuário ou senha incorretos");
+            AdicionarErroProcessamento("Usuário ou senha incorretos");
             return CustomResponse();
         }
 
+        private async Task<ResponseMessage> RegistrarCliente(UsuarioRegistro usuarioRegistro)
+        {
+            //Vou pegar o usuario que está registrado no identity pelo email
+            var usuario = await _userManager.FindByEmailAsync(usuarioRegistro.Email);
 
+            //Vou criar uma evento para enviar pra minha mensageria
+            var usuarioRegistrado = new UsuarioRegistradoIntegrationEvent(Guid.Parse(usuario.Id), usuarioRegistro.Nome, usuarioRegistro.Email, usuarioRegistro.Cpf);
+
+            try
+            {
+                //Vou enviar para a mensageria o evento (UsuarioRegistradoIntegrationEvent) e receber uma mensagem (ResponseMessage)
+                return await _bus.RequestAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(usuarioRegistrado);
+            }
+            catch
+            {
+                await _userManager.DeleteAsync(usuario);
+                throw;
+            }
+        }
     }
 }
